@@ -1,6 +1,6 @@
 var gulp = require('gulp');
 
-var less = require('postcss-less-engine');
+var less = require('gulp-less');
 
 var autoprefixer = require('autoprefixer');
 
@@ -12,11 +12,11 @@ var babel = require('gulp-babel');
 
 
 gulp.task('less', function () {
-    return gulp.src('./src/css/style.less')
+    return gulp.src('./src/css/*.less')
+    .pipe(less())
     .pipe(
         postcss([
-            less(),
-            autoprefixer()
+            autoprefixer({browsers: ['> 0.5%']})
         ], { parser: less.parser })
     )
     .pipe(
@@ -30,7 +30,7 @@ gulp.task('less', function () {
 });
 
 gulp.task('js', function () {
-    return gulp.src('./src/js/scripts.js')
+    return gulp.src('./src/js/*.js')
     .pipe(babel({
           presets: ['es2015']
         }))
@@ -44,7 +44,7 @@ gulp.task('js', function () {
     );
 });
 
-gulp.task('browsersync', ['less', 'js'], function() {
+gulp.task('browser-sync', ['less', 'js'], function() {
   browserSync.init({
       server: {
           baseDir: "./"
@@ -52,15 +52,6 @@ gulp.task('browsersync', ['less', 'js'], function() {
   });
 });
 
-
-
-
-gulp.task('sass', function () {
-    return gulp.src('scss/*.scss')
-                .pipe(sass())
-                .pipe(gulp.dest('css'))
-                .pipe(bs.reload({stream: true}));
-});
 
 gulp.task('watch', ['browser-sync'], function () {
     gulp.watch("src/css/*.less", ['less']);

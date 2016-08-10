@@ -1,9 +1,6 @@
 body {
-  transform: translate(0, 0); }
-
-:fullscreen a {
-  display: flex; }
-ex; }
-
-:fullscreen a {
-  display: flex; }
+  -webkit-transform: translate(0, 0);
+          transform: translate(0, 0);
+  -webkit-filter: hue-rotate(60deg);
+          filter: hue-rotate(60deg);
+}
