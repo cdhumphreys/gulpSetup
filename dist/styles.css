@@ -1,6 +1,1 @@
-body {
-  -webkit-transform: translate(0, 0);
-          transform: translate(0, 0);
-  -webkit-filter: hue-rotate(60deg);
-          filter: hue-rotate(60deg);
-}
+body{display:-webkit-box;display:flex;background-color:green}

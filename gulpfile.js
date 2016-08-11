@@ -9,14 +9,15 @@ var postcss = require('gulp-postcss');
 var browserSync = require('browser-sync').create();
 
 var babel = require('gulp-babel');
-
+var cssnano  = require('cssnano');
 
 gulp.task('less', function () {
     return gulp.src('./src/css/*.less')
     .pipe(less())
     .pipe(
         postcss([
-            autoprefixer({browsers: ['> 0.5%']})
+            autoprefixer({browsers: ['> 0.5%']}),
+            cssnano()
         ], { parser: less.parser })
     )
     .pipe(
