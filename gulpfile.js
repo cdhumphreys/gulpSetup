@@ -11,17 +11,22 @@ var browserSync = require('browser-sync').create();
 var babel = require('gulp-babel');
 var cssnano  = require('cssnano');
 
+function errorHandler(error) {
+  console.log(error.toString());
+}
 gulp.task('less', function () {
     return gulp.src('./src/css/*.less')
     .pipe(less())
+    .on('error', errorHandler)
     .pipe(
         postcss([
             autoprefixer({browsers: ['> 0.5%']}),
             cssnano()
         ], { parser: less.parser })
     )
+    .on('error', errorHandler)
     .pipe(
-        gulp.dest('./dist')
+        gulp.dest('./dist/css')
     )
     .pipe(
       browserSync.reload({
@@ -35,8 +40,9 @@ gulp.task('js', function () {
     .pipe(babel({
           presets: ['es2015']
         }))
+    .on('error', errorHandler)
     .pipe(
-        gulp.dest('./dist')
+        gulp.dest('./dist/js')
     )
     .pipe(
       browserSync.reload({
@@ -53,6 +59,7 @@ gulp.task('browser-sync', ['less', 'js'], function() {
   });
 });
 
+gulp.task('default', ['less', 'js']);
 
 gulp.task('watch', ['browser-sync'], function () {
     gulp.watch("src/css/*.less", ['less']);
